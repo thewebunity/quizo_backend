@@ -3,9 +3,8 @@ const router = express.Router();
 const exam = require('../Schema/Exam')
 
 
-router.get('/getquestions', async (req, res) => {
-    var { id } = req.body;
-console.log(id)
+router.get('/getquestions/:id', async (req, res) => {
+    var { id } = req.params;
     try {
         const ExamExist = await exam.findOne({ _id : id });
         if (ExamExist) {
