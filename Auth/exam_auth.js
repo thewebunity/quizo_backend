@@ -1,37 +1,33 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const exam = require('../Schema/Exam')
-var bcrypt = require('bcryptjs');
+const exam = require("../Schema/Exam");
+var bcrypt = require("bcryptjs");
 
-router.post('/exam', async (req, res) => {
-    var { title, questions, duration, marks } = req.body;
+router.post("/exam", async (req, res) => {
+  var { title, questions, duration, marks } = req.body;
 
-    try {
-        const Exam = new exam({ title, questions, duration, marks });
-        const ExamRegister = await Exam.save();
-        if (ExamRegister) {
-            return res.status(200).send({ success: true, message: "Exam Register Successfully" })
-        }
+  try {
+    const Exam = new exam({ title, questions, duration, marks });
+    const ExamRegister = await Exam.save();
+    if (ExamRegister) {
+      return res
+        .status(200)
+        .send({ success: true, message: "Exam Register Successfully" });
     }
-    catch {
-        return res.status(500).send({ success: false, message: 'Server Error' })
-    }
-})
+  } catch {
+    return res.status(500).send({ success: false, message: "Server Error" });
+  }
+});
 
+router.get("/getexam", async (req, res) => {
+  try {
+    const Exam = await exam.find();
+    if (Exam) {
+      return res.status(200).send({ success: true, exam: Exam });
+    }
+  } catch {
+    return res.status(500).send({ success: false, message: "Server Error" });
+  }
+});
 
 module.exports = router;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
